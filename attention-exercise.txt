@@ -1,0 +1,152 @@
+(D) Pay Attention (1/2) [10 Points] 
+
+The meaning of a word depends on its context. For example, in the sentence “The farmer seeded the field 
+with corn,” the word seeded means “added seeds to.” However, in the sentence “The chef seeded the        
+tomato,” the word seeded means “took seeds away from.” Similarly, bat means different things in “The    
+baseball player swung the bat” vs. “The bat flew through the air.” 
+ 
+If you were building a model of language, how would you get it to recognize the way that a word’s meaning 
+depends on context? One popular technique for achieving this goal is a mechanism called attention. In the 
+way that attention is implemented in current state-of-the-art models of language, the model has a large  
+number of attention heads, each of which is denoted by a pair of numbers (for examples, 8-10). When the 
+model processes a sentence, for every pair of words in the sentence, each head calculates the “relatedness” 
+of the two words. 
+ 
+The one wrinkle is that we do not know what exactly “relatedness” should mean, so instead of telling the 
+model how to define “relatedness,” we let the model learn its own definition of relatedness. Recently,     
+computer scientists have started to analyze what these attention heads have learned, and this analysis shows 
+that they often reflect linguistic information! For example, here’s the output of one attention head  
+(head 8-10) when we feed the following sentence into BERT1, which is one of the most popular models that 
+uses attention heads:  
+
+ 
+
+Example: I1 see2 my3 sister4, but5 she6 can’t7 see8 me9 because10 she11 is12 reading13 a14 linguistics15 book16. 
+Output: 4 → 2,  9 → 8,  16 → 13 
+
+ 
+
+This output signifies that head 8-10 connects word #4 (sister) to word #2 (see), as well as word #9 (me) to 
+word #8 (see) and word #16 (book) to word #13 (reading). If you consider what all of those pairs of words 
+have in common, you’ll see that each one is a verb and its direct object: sister is the direct object of the first 
+instance of see, me is the direct object of the second instance of see, and book is the direct object of reading. 
+It appears that head 8-10 has learn to connect verbs to their objects!  (Note that these activations are         
+directional; for example, word #2 is not connected to word #4.) 
+ 
+Why is this information useful? If we go back to the example with the verb seed, this sort of information can 
+help the model figure out which version of seed is being used: If its direct object is something like field or 
+lawn, then it probably means “to add seeds to;” if its direct object is something like tomato or watermelon, 
+then it probably means “to take seeds away from.”  Of course, one sentence isn’t enough to draw strong  
+conclusions.  Instead, computer scientists tend to use a corpus, or a database, of example sentences to find 
+patterns in the data.  On the next page is a small corpus, the NacloWeb Corpus1, which has 7 sentences.  
+ 
+ 
+ 
+ 1 Some sentences derived from data in the English Web Treebank. 
+ 
+ 
+
+(D) Pay Attention (2/2) 
+
+NacloWeb Corpus 
+
+1.  My1 experience2 with3 Gelda4 's5 House6 of7 Gelbelgarg8 has9 been10 extremely11 wonderful12 
+2.  We1 use2 Google3 ‘s4 models5 to6 delve7 into8 the9 inner10 workings11 of12 language13 
+3.  At1 this2 corporation3 's4 meeting5 people6 are7 concerned8 about9 the10 company11 's12 plans13 
+4. 
+In1 July2 we3 will4 interview5 the6 candidate7 and8 review9 her10 resumé11 again12 
+5.  The1 platypus2 is3 a4 strange5 animal,6 with7 its8 eggs9 and10 its11 webbed12 feet13 
+6. 
+7.  Linguistics1 is2 a3 beautiful4 science5 that6 provides7 interdisciplinary8 insight9 into10 the11 human12 
+
+I1 think2 that3 although4 my5 NACLO6 exam7 was8 difficult,9 it10 was11 a12 lot13 of14 fun15 
+
+experience13 
+
+ 
+Note that the NacloWeb corpus treats the possessive element ’s as a separate word. (So in Sentence #1, 
+word #5 is ’s and word #6 is House.) 
+ 
+In our experiment on the NacloWeb Corpus, we ran each of the corpus’ sentences through BERT and 
+recorded the outputs of four attention heads (8-11, 7-6, 9-6, and 5-4). Unfortunately, due to some extremely 
+sloppy experimental procedure, we don’t remember in which order we ran them through the model; in 
+addition, we forgot to record some data. Your job is to fill in the blanks! Note that some blanks may have 
+more than one connection, and some may have none at all. 
+ 
+ 
+
+Sentence  8-11 
+
+Sentence A  12 → 13 
+
+Sentence B  (a) 
+
+7-6 
+
+5 → 7 
+
+9-6 
+
+14 → 15 
+
+8 → 9, 11 → 13 
+
+7 → 9, 7 → 13 
+
+5-4 
+
+10 → 7, 5 → 1 
+
+8 → 2, 11 → 2 
+
+Sentence C  2 → 3, 10 → 11 
+
+4 → 5, 12 → 13 
+
+(b) 
+
+Sentence D  (c) 
+
+Sentence E  3 → 5, 11 → 13 
+
+4 → 5 
+
+(d) 
+
+12 → 13, 8 → 11 
+
+10 → 13 
+
+Sentence F  (e) 
+
+Sentence G  (f) 
+
+1 → 2, 5 → 6 
+
+7 → 8, 3 → 6 
+
+(g) 
+
+(h) 
+
+11 → 3 
+
+None 
+
+5 → 1 
+
+None 
+
+(i) 
+
+ 
+ 
+ 
+D1. Identify sentences A-G. Record your answers in the Answer Sheets. 
+ 
+D2. Fill in the missing data in the table in the Answer Sheets. 
+ 
+
+ 
+
+
